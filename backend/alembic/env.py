@@ -2,17 +2,18 @@ import asyncio
 import os
 from logging.config import fileConfig
 
-from alembic import context
 from sqlalchemy.ext.asyncio import create_async_engine
+
+from alembic import context
 
 # Set env defaults so alembic can import app modules without a .env file
 os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://test:test@localhost:5432/test")
 os.environ.setdefault("ANTHROPIC_API_KEY", "test")
 os.environ.setdefault("OPENAI_API_KEY", "test")
 
+from app import models  # noqa: E402, F401 — registers ORM models
 from app.config import settings  # noqa: E402
 from app.database import Base  # noqa: E402
-from app import models  # noqa: E402, F401 — registers ORM models
 
 config = context.config
 
