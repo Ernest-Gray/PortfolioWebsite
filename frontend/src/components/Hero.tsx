@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export default function Hero() {
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center px-6 pt-16">
+    <section id="hero" className="px-6 pt-32 pb-16 flex justify-center">
       <div className="max-w-4xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -17,7 +17,7 @@ export default function Hero() {
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
             Building GenAI services, RAG pipelines, and cloud infrastructure at AWS. Open-source
-            contributor to LISA and MLSpace. Active/Secret clearance.
+            contributor to LISA and MLSpace.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <a
@@ -49,9 +49,9 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="mt-16"
+          className="mt-10"
         >
-          <div className="w-px h-12 bg-gradient-to-b from-slate-700 to-transparent mx-auto" />
+          <div className="w-px h-8 bg-gradient-to-b from-slate-700 to-transparent mx-auto" />
         </motion.div>
       </div>
     </section>

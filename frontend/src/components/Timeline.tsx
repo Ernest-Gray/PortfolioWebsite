@@ -6,7 +6,7 @@ export default function Timeline() {
   const [expanded, setExpanded] = useState<string | null>(jobs[0].id)
 
   return (
-    <section id="experience" className="py-24 px-6">
+    <section id="experience" className="py-16 px-6">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -14,10 +14,10 @@ export default function Timeline() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl font-bold text-slate-100 mb-2">Experience</h2>
-          <div className="w-12 h-1 bg-cyan-500 mb-12" />
+          <div className="w-12 h-1 bg-cyan-500 mb-8" />
         </motion.div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {jobs.map((job, i) => (
             <motion.div
               id={job.id}
@@ -33,14 +33,14 @@ export default function Timeline() {
               }`}
             >
               <button
-                className="w-full text-left p-6"
+                className="w-full text-left p-5"
                 onClick={() => setExpanded(expanded === job.id ? null : job.id)}
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-cyan-400 text-sm font-medium mb-1">{job.company}</p>
+                    <p className="text-cyan-400 text-sm font-medium mb-0.5">{job.company}</p>
                     <h3 className="text-slate-100 font-semibold text-lg">{job.title}</h3>
-                    <p className="text-slate-500 text-sm mt-1">
+                    <p className="text-slate-500 text-sm mt-0.5">
                       {job.period} · {job.location}
                     </p>
                   </div>
@@ -73,7 +73,7 @@ export default function Timeline() {
               </button>
 
               {expanded === job.id && (
-                <div className="px-6 pb-6 border-t border-slate-800">
+                <div className="px-5 pb-5 border-t border-slate-800">
                   <ul className="mt-4 space-y-2">
                     {job.highlights.map((h, j) => (
                       <li key={j} className="flex gap-3 text-slate-400 text-sm leading-relaxed">
@@ -82,6 +82,25 @@ export default function Timeline() {
                       </li>
                     ))}
                   </ul>
+                  {job.images && job.images.length > 0 && (
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      {job.images.map((src, k) => {
+                        const isLogo = src.endsWith('.png') || src.endsWith('.webp')
+                        return (
+                          <div
+                            key={k}
+                            className={`rounded-lg overflow-hidden border border-slate-700 flex items-center justify-center ${isLogo ? 'bg-slate-800 p-3 h-36' : ''}`}
+                          >
+                            <img
+                              src={src}
+                              alt=""
+                              className={isLogo ? 'max-h-28 max-w-full object-contain' : 'w-full h-36 object-cover'}
+                            />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
             </motion.div>

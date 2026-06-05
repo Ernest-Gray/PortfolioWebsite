@@ -3,7 +3,7 @@ import { skillGroups } from '../data/experience'
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 px-6 bg-slate-900/30">
+    <section id="skills" className="py-16 px-6 bg-slate-900/30">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -11,7 +11,7 @@ export default function Skills() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl font-bold text-slate-100 mb-2">Skills</h2>
-          <div className="w-12 h-1 bg-cyan-500 mb-12" />
+          <div className="w-12 h-1 bg-cyan-500 mb-8" />
           <div className="grid md:grid-cols-2 gap-8">
             {skillGroups.map((group) => (
               <div key={group.label}>

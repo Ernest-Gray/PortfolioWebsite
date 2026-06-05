@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import Hero from './components/Hero'
 import Navbar from './components/Navbar'
 import ProjectCards from './components/ProjectCards'
+import SiteShowcase from './components/SiteShowcase'
 import Skills from './components/Skills'
 import Timeline from './components/Timeline'
 
@@ -17,6 +18,7 @@ export default function App() {
         <Timeline />
         <Skills />
         <ProjectCards />
+        <SiteShowcase />
       </main>
       <Footer />
       <ChatWidget />

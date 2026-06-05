@@ -1,80 +1,97 @@
 # Ernest Gray — Northrop Grumman Work History
 
 ## Role
-Software Engineer / Software Tech Lead
+Software Engineer
 Northrop Grumman — Linthicum Heights, MD
-July 2023 – November 2025
-Security Clearance: Active/Secret
+July 2023 – December 2025
+
+## Summary
+Developed embedded systems software and Python instrumentation for defense programs spanning airborne radar (F-16 APG-83 SABR), electronic warfare (Viper Shield), and large-scale physics test stand automation. Served as Tech Lead for a 5-engineer team. Contributed to a $29M Northrop Grumman contract.
 
 ---
 
-## Project: Software Tech Lead — MDA (Microelectronics Design and Application)
+## Project: Electronic Warfare Integration — Viper Shield ($29M Contract)
 
-Led a software team of four engineers to integrate software on five test-stands that helped physicists conduct more experiments. The work enabled the physics team to run more experiments faster and with fewer errors.
+**Impact:** This integration contributed to a $29M contract for Northrop Grumman.
 
-**Bitstream Generation Tools:**
-- Created bitstream generation tools for physicists so they could form complicated bitstreams (hundreds to tens-of-thousands of bits long) easier, faster, with less errors, and more utility
-- Tools replaced manual error-prone processes with automated, validated generation pipelines
+- Retrofitted and refactored an existing embedded OFP (Operational Flight Program) interface to integrate Viper Shield, an Electronic Warfare (EW) system.
+- Required deep analysis of legacy C++ code and its hardware interactions to understand the existing architecture before making changes.
+- Updated the Real-Time Simulation (RTS) software to model Viper Shield's mission-computer control path, enabling the Integration and Test (I&T) team to run full EW capability assessments against system requirements before hardware was available.
 
-**Test-Stand Remote Communication Software:**
-- Designed software to help the team remotely communicate with temperature, pressure, and valve controllers on the test-stands
-- Enabled remote monitoring and control of physical lab equipment from software interfaces
-
-**Python Framework Integration:**
-- Learned, updated, and applied the in-house Python framework to the team's test-stands
-- Adapted existing internal tooling for new experimental configurations
-
-**Stakeholder Demonstrations:**
-- Collaborated with 3 other teams to create demonstrations showcasing major developments of the project to leadership and major stakeholders
-
-**Hardware Simulation with Oscilloscopes and AWGs:**
-- Used oscilloscopes and arbitrary waveform generators (AWGs) to playback generated test vectors to simulate hardware outputs and verify software validity
-- Created scripts to generate, transfer, and play sequences for arbitrary waveform generators
-- Wrote scripts to configure and read data from oscilloscopes
-- Simulated physical hardware outputs with AWGs and oscilloscopes to test against known digital simulations
-- Created scripts to read off values from the scope and parse analog traces to expected output bitstream
-
-**Data Visualization:**
-- Developed multiple utility plots to efficiently represent large amounts (1 million+ data points) of data gathered from the test stand
-
-**Technologies:** Python, NumPy, oscilloscope control APIs, AWG programming, data visualization
+**Stack:** C++, embedded radar OFP, Electronic Warfare (EW) systems integration, Real-Time Simulation (RTS).
 
 ---
 
-## Project: Machine Learning Algorithm for Enhanced Combat ID — F-16 SABR Radar
+## Project: Embedded ML — F-16 APG-83 SABR Airborne Radar
 
-**Context:** Scalable Agile Beam Radar (SABR) — F-16 Fighter Jet Embedded Software
-Embedded C++, MATLAB
+The APG-83 SABR (Scalable Agile Beam Radar) is the production radar system on the F-16 fighter jet. Ernest implemented a machine learning model for real-time target identification.
 
-**ML Model Implementation:**
-- Implemented a machine learning model designed for Combat ID Decision Architecture (CIDA)
-- The model — a Support Vector Machine (SVM) — was designed to enhance CIDA to resolve a gap in key F-16 air-to-air identification requirements
-- Converted MATLAB models into embedded C++ code for the Operational Flight Program (OFP) — the actual flight software running on the F-16
+**SVM Model Implementation:**
+- Implemented a Support Vector Machine (SVM) classification model in embedded C++ for real-time airborne target ID on the F-16 APG-83 SABR radar.
+- The model was designed to fill a gap in the Combat ID Decision Architecture (CIDA) — enhancing the platform's air-to-air identification capability.
+- Converted MATLAB simulation models to production embedded C++ for the Operational Flight Program (OFP), maintaining numerical fidelity under real-time processing constraints.
 
 **Signal Processing:**
-- Developed signal processing code to extract combat ID features during runtime as inputs into the SVM weights
-- Features extracted from radar returns were fed into the SVM for real-time classification
+- Developed signal processing routines to extract classification features from radar returns at runtime as inputs to the SVM.
 
 **Embedded C++ Engineering:**
-- Ensured proper error catching logic to prevent memory leaks and null pointer exceptions
-- Learned and designed code around the radar's custom library for memory management and logging
-- Used object-oriented paradigms and reused existing parts code while expanding when necessary
-- Worked within strict embedded constraints (memory, timing, safety)
+- Implemented memory-safe code using the platform's custom memory management and logging libraries.
+- Ensured no memory leaks or null pointer exceptions under all tested code paths.
+- Worked within strict embedded constraints (memory, timing, deterministic execution).
 
-**Multi-Level Software Testing:**
-- Created, executed, and analyzed data from multi-level software tests:
-  - Simulations
-  - Software lab tests
-  - System lab tests using the tactical radar hardware and open-air radiation
-- Performed statistical analysis with CIDA system engineers over results of gathered data
-- Validated performance of the model and strategized for improvements based on results
+**Multi-Level Software Validation:**
+- Executed validation across four levels: unit tests, software lab integration tests, hardware-in-the-loop system tests using tactical radar hardware, and open-air radiation tests.
+- Performed statistical analysis with CIDA systems engineers to validate model performance metrics and develop a structured improvement roadmap.
 
-**Technologies:** C++, MATLAB, embedded systems, signal processing, SVM, military radar systems
+**Stack:** C++, MATLAB (model origin), embedded real-time systems, SVM, custom platform libraries.
+
+---
+
+## Project: Python Instrumentation — Physics Test Stands (Tech Lead)
+
+Led a 5-engineer software team integrating Python instrumentation across 5 experimental physics test stands.
+
+**Leadership:**
+- Led the team through development, code reviews, and delivery milestones.
+- Collaborated with 3 partner teams to prepare capability demonstrations for program leadership and stakeholders.
+
+**Bitstream Generation Framework:**
+- Built a bitstream generation framework that let physics researchers construct complex test sequences through a higher-level API — reducing manual errors and cutting configuration time for sequences ranging from hundreds to tens-of-thousands of bits.
+
+**Remote Instrument Control:**
+- Designed remote control software for temperature sensors, pressure gauges, and valve controllers, enabling hands-off test-stand operation and automated data collection.
+
+**Hardware Simulation:**
+- Automated AWG (arbitrary waveform generator) sequence generation, transfer, and playback to simulate hardware outputs.
+- Wrote oscilloscope control scripts to capture analog traces and parse them against expected digital simulation results.
+
+**Data Visualization:**
+- Built data visualization tools handling 1M+ data points from test stand measurements, enabling rapid review of experimental results by the physics team.
+
+**Stack:** Python, NumPy, in-house instrumentation framework, AWG/oscilloscope control interfaces.
+
+---
+
+## Project: Nav-Playback Tool — Internal Developer Utility
+
+- Designed and built a custom C++ application to replay Operational Flight Program (OFP) navigation functions and compare them against flight metrics.
+- Enabled the team to evaluate new navigation algorithms and performance improvements without running live hardware tests — significantly reducing iteration time.
+- Added MATLAB scripting support for data import/export so systems engineers could feed the tool from their existing MATLAB workflows.
+- Designed custom 2D and 3D MATLAB plots for detailed navigation data visualization.
+
+**Stack:** C++, MATLAB.
+
+---
+
+## Project: Radar Algorithm Development & Bug Fixes
+
+- Collaborated weekly with a Senior Systems Engineer to design, implement, and validate new radar algorithms in MATLAB, then converted each iteration to embedded C++ for the Operational Flight Program.
+- Diagnosed and resolved Electronic Protection (EP) defects by analyzing historical flight test data to identify root causes, implementing fixes, and validating against test datasets.
 
 ---
 
 ## Overall Impact at Northrop Grumman
-- Served as technical lead for a team of 4 engineers on critical defense infrastructure
-- Contributed to both physics research infrastructure (test-stand automation) and active fighter jet systems (F-16 SABR radar ML)
-- Gained experience in embedded ML, signal processing, physics instrumentation, and defense software validation
-- Worked with Active/Secret clearance on programs involving classified defense systems
+- Contributed to a $29M Northrop Grumman contract via Viper Shield EW integration.
+- Served as technical lead for a team of 5 engineers on critical defense infrastructure.
+- Shipped ML-powered software running on active F-16 fighter jets.
+- Gained experience across embedded ML, signal processing, electronic warfare, physics instrumentation, and defense software validation.

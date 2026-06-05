@@ -96,7 +96,7 @@ VITE_API_URL=http://localhost:8000
 
 **Files:** `knowledge-base/{personal-bio,aws-work,northrop-work,education-projects}.md`
 
-- [ ] Write `knowledge-base/personal-bio.md` — name, contact, education (Towson CS 3.86), location (Denver CO), clearance (Active/Secret), job targets, elevator pitch, SAFe cert, GitHub/LinkedIn URLs
+- [ ] Write `knowledge-base/personal-bio.md` — name, contact, education (Towson CS 3.86), location (Denver CO), job targets, elevator pitch, SAFe cert, GitHub/LinkedIn URLs
 - [ ] Write `knowledge-base/aws-work.md` — full AWS AI/ML SDE work (Dec 2025–present): MissionSolutionsKBBot RAG Slack bot, LISA liteLLM fix + Claude Code integration, MLSpace workforce portal URL feature + dependency uplift, BlackMirror/PRevere cross-partition observability, Oscar agent refactor, tech skills (Lambda/CDK/Bedrock/Kendra/SageMaker/SQS/pgvector)
 - [ ] Write `knowledge-base/northrop-work.md` — Software Tech Lead MDA (led team of 4, test-stand software, bitstream tools, Python/NumPy, oscilloscope/AWG scripts), F-16 SABR ML (SVM in C++ for combat ID, MATLAB→C++ embedded conversion, signal processing)
 - [ ] Write `knowledge-base/education-projects.md` — BS CS Towson 2023 GPA 3.86, LightningFlashcards (full-stack, OpenAI API, Stripe, MySQL, React), InfoSys intern (CV camera config Python/TF, hackathon VR app team lead), SAFe Scrum Master 6.0
@@ -1169,7 +1169,7 @@ export default function Hero() {
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
             Building GenAI services, RAG pipelines, and cloud infrastructure at AWS.
-            Open-source contributor to LISA and MLSpace. Active/Secret clearance.
+            Open-source contributor to LISA and MLSpace.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <a href="https://github.com/Ernest-Gray" target="_blank" rel="noopener noreferrer"
@@ -1202,7 +1202,6 @@ import { motion } from 'framer-motion'
 
 const facts = [
   { label: 'Location', value: 'Denver, CO' },
-  { label: 'Clearance', value: 'Active / Secret' },
   { label: 'Experience', value: '4 Years' },
   { label: 'Education', value: 'BS CS, Towson — GPA 3.86' },
   { label: 'Cert', value: 'SAFe Scrum Master 6.0' },

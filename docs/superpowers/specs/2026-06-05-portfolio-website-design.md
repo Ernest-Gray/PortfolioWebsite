@@ -170,7 +170,7 @@ Navbar (sticky)
   └── Experience dropdown: AWS AI/ML | Northrop Grumman | LightningFlashcards | InfoSys Intern
 
 Hero              — Name, title, one-liner, GitHub/LinkedIn/Resume CTAs
-About             — Short paragraph, key facts (clearance, location, targets)
+About             — Short paragraph, key facts (location, targets)
 Experience        — Expandable timeline cards, anchor targets per job
 Skills            — Grouped chips: Languages / AWS / GenAI / IaC / Testing
 Projects          — Cards for LISA PR, MLSpace PRs, LightningFlashcards

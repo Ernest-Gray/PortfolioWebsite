@@ -56,7 +56,7 @@ test.describe('Portfolio site', () => {
     await experienceSection.scrollIntoViewIfNeeded()
     // click Northrop card button
     await page.locator('#northrop button').first().click()
-    await expect(page.getByText(/Tech Lead for MDA team/)).toBeVisible()
+    await expect(page.getByText(/\$29M Northrop Grumman contract/)).toBeVisible()
   })
 
   test('Projects section renders', async ({ page }) => {
