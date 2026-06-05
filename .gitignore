@@ -1,0 +1,24 @@
+# Python
+backend/.venv/
+**/__pycache__/
+**/*.egg-info/
+**/.pytest_cache/
+**/dist/
+.ruff_cache/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.playwright/
+frontend/test-results/
+frontend/playwright-report/
+
+# Env
+.env
+backend/.env
+frontend/.env
+frontend/.env.local
+
+# OS
+.DS_Store
+Thumbs.db
