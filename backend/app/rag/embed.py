@@ -1,6 +1,6 @@
-from openai import AsyncOpenAI
+import os
 
-from app.config import settings
+from openai import AsyncOpenAI
 
 _client: AsyncOpenAI | None = None
 
@@ -8,7 +8,7 @@ _client: AsyncOpenAI | None = None
 def _get_client() -> AsyncOpenAI:
     global _client
     if _client is None:
-        _client = AsyncOpenAI(api_key=settings.openai_api_key)
+        _client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
     return _client
 
 

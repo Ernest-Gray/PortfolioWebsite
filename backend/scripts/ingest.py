@@ -5,6 +5,7 @@ Requires DATABASE_URL, OPENAI_API_KEY in backend/.env
 """
 
 import asyncio
+import os
 import sys
 from pathlib import Path
 
@@ -13,8 +14,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from app.config import settings
 from app.rag.embed import embed_text
+
+_db_url = os.environ["DATABASE_URL"]
 
 CHUNK_SIZE = 1500
 CHUNK_OVERLAP = 200
@@ -34,7 +36,7 @@ def chunk_text(text_: str, source: str) -> list[dict]:
 
 
 async def ingest():
-    engine = create_async_engine(settings.database_url)
+    engine = create_async_engine(_db_url)
     Session = async_sessionmaker(engine, expire_on_commit=False)
 
     md_files = sorted(KB_DIR.glob("*.md"))
