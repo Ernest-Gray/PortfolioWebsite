@@ -13,12 +13,7 @@ const SUGGESTED = [
 export default function ChatWidget() {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
-  const { messages, isLoading, error, sendMessage } = useChat()
-  const bottomRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+  const { messages, isLoading, error, sendMessage, clearMessages } = useChat()
 
   const handleSend = async () => {
     const msg = input.trim()
@@ -66,7 +61,7 @@ export default function ChatWidget() {
               handleSend={handleSend}
               handleKey={handleKey}
               sendMessage={sendMessage}
-              bottomRef={bottomRef}
+              clearMessages={clearMessages}
             />
           </motion.div>
         )}
@@ -90,7 +85,7 @@ export default function ChatWidget() {
               handleSend={handleSend}
               handleKey={handleKey}
               sendMessage={sendMessage}
-              bottomRef={bottomRef}
+              clearMessages={clearMessages}
             />
           </motion.div>
         )}
@@ -108,7 +103,7 @@ interface ChatPanelProps {
   handleSend: () => void
   handleKey: (e: React.KeyboardEvent) => void
   sendMessage: (msg: string) => Promise<void>
-  bottomRef: React.RefObject<HTMLDivElement | null>
+  clearMessages: () => void
 }
 
 function ChatPanel({
@@ -120,16 +115,35 @@ function ChatPanel({
   handleSend,
   handleKey,
   sendMessage,
-  bottomRef,
+  clearMessages,
 }: ChatPanelProps) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }, [messages])
+
   return (
     <div className="flex flex-col h-full">
-      <div className="px-4 py-3 border-b border-slate-800">
-        <p className="text-slate-100 font-medium text-sm">Ask about Ernest</p>
-        <p className="text-slate-500 text-xs">Answers grounded in real work history</p>
+      <div className="px-4 py-3 border-b border-slate-800 flex items-start justify-between">
+        <div>
+          <p className="text-slate-100 font-medium text-sm">Ask about Ernest</p>
+          <p className="text-slate-500 text-xs">Answers grounded in real work history</p>
+        </div>
+        {messages.length > 0 && (
+          <button
+            onClick={clearMessages}
+            title="New conversation"
+            className="text-slate-500 hover:text-slate-300 transition-colors text-lg leading-none mt-0.5"
+          >
+            ↺
+          </button>
+        )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
         {messages.length === 0 && (
           <div className="space-y-2">
             <p className="text-slate-500 text-xs text-center mb-4">Try asking:</p>
@@ -144,52 +158,54 @@ function ChatPanel({
             ))}
           </div>
         )}
-        {messages.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div
-              className={`max-w-[85%] px-3 py-2 rounded-xl text-sm leading-relaxed ${
-                msg.role === 'user'
-                  ? 'bg-cyan-500 text-slate-950 rounded-br-sm'
-                  : 'bg-slate-800 text-slate-200 rounded-bl-sm'
-              }`}
-            >
-              {msg.role === 'assistant' ? (
-                msg.content ? (
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
-                      ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-1 my-2">{children}</ul>,
-                      ol: ({ children }) => <ol className="list-decimal list-outside pl-4 space-y-1 my-2">{children}</ol>,
-                      li: ({ children }) => <li className="leading-relaxed">{children}</li>,
-                      strong: ({ children }) => <strong className="font-semibold text-slate-100">{children}</strong>,
-                      code: ({ children, className }) => {
-                        const isBlock = !!className
-                        return isBlock ? (
-                          <code className="block bg-slate-700 rounded p-2 my-2 overflow-x-auto text-xs font-mono text-slate-200">{children}</code>
-                        ) : (
-                          <code className="bg-slate-700 rounded px-1 py-0.5 text-xs font-mono text-cyan-300">{children}</code>
-                        )
-                      },
-                      pre: ({ children }) => <pre className="my-2 overflow-x-auto">{children}</pre>,
-                      h2: ({ children }) => <h2 className="font-semibold text-slate-100 mt-3 mb-1 text-sm">{children}</h2>,
-                      h3: ({ children }) => <h3 className="font-semibold text-slate-100 mt-2 mb-1 text-sm">{children}</h3>,
-                      a: ({ children, href }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">{children}</a>,
-                    }}
-                  >
-                    {msg.content}
-                  </ReactMarkdown>
-                ) : isLoading && i === messages.length - 1 ? (
-                  <span className="animate-pulse">▋</span>
-                ) : null
-              ) : (
-                msg.content
-              )}
+        {messages.map((msg, i) => {
+          const isStreamingThis = isLoading && i === messages.length - 1
+          return (
+            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div
+                className={`max-w-[85%] px-3 py-2 rounded-xl text-sm leading-relaxed ${
+                  msg.role === 'user'
+                    ? 'bg-cyan-500 text-slate-950 rounded-br-sm'
+                    : 'bg-slate-800 text-slate-200 rounded-bl-sm'
+                }`}
+              >
+                {msg.role === 'assistant' ? (
+                  msg.content ? (
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-1 my-2">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal list-outside pl-4 space-y-1 my-2">{children}</ol>,
+                        li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                        strong: ({ children }) => <strong className="font-semibold text-slate-100">{children}</strong>,
+                        code: ({ children, className }) => {
+                          const isBlock = !!className
+                          return isBlock ? (
+                            <code className="block bg-slate-700 rounded p-2 my-2 overflow-x-auto text-xs font-mono text-slate-200">{children}</code>
+                          ) : (
+                            <code className="bg-slate-700 rounded px-1 py-0.5 text-xs font-mono text-cyan-300">{children}</code>
+                          )
+                        },
+                        pre: ({ children }) => <pre className="my-2 overflow-x-auto">{children}</pre>,
+                        h2: ({ children }) => <h2 className="font-semibold text-slate-100 mt-3 mb-1 text-sm">{children}</h2>,
+                        h3: ({ children }) => <h3 className="font-semibold text-slate-100 mt-2 mb-1 text-sm">{children}</h3>,
+                        a: ({ children, href }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">{children}</a>,
+                      }}
+                    >
+                      {isStreamingThis ? msg.content + '▋' : msg.content}
+                    </ReactMarkdown>
+                  ) : (
+                    <span className="animate-pulse">▋</span>
+                  )
+                ) : (
+                  msg.content
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
         {error && <p className="text-red-400 text-xs text-center">{error}</p>}
-        <div ref={bottomRef} />
       </div>
 
       <div className="flex-shrink-0 p-3 border-t border-slate-800 bg-slate-900">
