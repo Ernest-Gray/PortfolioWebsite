@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { useChat } from '../hooks/useChat'
 
 const SUGGESTED = [
@@ -151,12 +153,38 @@ function ChatPanel({
                   : 'bg-slate-800 text-slate-200 rounded-bl-sm'
               }`}
             >
-              {msg.content ||
-                (isLoading && i === messages.length - 1 ? (
+              {msg.role === 'assistant' ? (
+                msg.content ? (
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
+                      ul: ({ children }) => <ul className="list-disc list-outside pl-4 space-y-1 my-2">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal list-outside pl-4 space-y-1 my-2">{children}</ol>,
+                      li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                      strong: ({ children }) => <strong className="font-semibold text-slate-100">{children}</strong>,
+                      code: ({ children, className }) => {
+                        const isBlock = !!className
+                        return isBlock ? (
+                          <code className="block bg-slate-700 rounded p-2 my-2 overflow-x-auto text-xs font-mono text-slate-200">{children}</code>
+                        ) : (
+                          <code className="bg-slate-700 rounded px-1 py-0.5 text-xs font-mono text-cyan-300">{children}</code>
+                        )
+                      },
+                      pre: ({ children }) => <pre className="my-2 overflow-x-auto">{children}</pre>,
+                      h2: ({ children }) => <h2 className="font-semibold text-slate-100 mt-3 mb-1 text-sm">{children}</h2>,
+                      h3: ({ children }) => <h3 className="font-semibold text-slate-100 mt-2 mb-1 text-sm">{children}</h3>,
+                      a: ({ children, href }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">{children}</a>,
+                    }}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
+                ) : isLoading && i === messages.length - 1 ? (
                   <span className="animate-pulse">▋</span>
-                ) : (
-                  ''
-                ))}
+                ) : null
+              ) : (
+                msg.content
+              )}
             </div>
           </div>
         ))}
