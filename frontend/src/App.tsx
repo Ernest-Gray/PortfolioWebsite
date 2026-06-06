@@ -2,6 +2,7 @@ import About from './components/About'
 import ChatWidget from './components/ChatWidget'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
+import Hobbies from './components/Hobbies'
 import Navbar from './components/Navbar'
 import ProjectCards from './components/ProjectCards'
 import SiteShowcase from './components/SiteShowcase'
@@ -19,6 +20,7 @@ export default function App() {
         <Skills />
         <ProjectCards />
         <SiteShowcase />
+        <Hobbies />
       </main>
       <Footer />
       <ChatWidget />
