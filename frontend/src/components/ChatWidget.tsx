@@ -53,7 +53,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-20 right-6 z-40 w-[380px] max-h-[560px] hidden md:flex flex-col bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden"
+            className="fixed bottom-20 right-6 z-40 w-[380px] h-[540px] hidden md:flex flex-col bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden"
           >
             <ChatPanel
               messages={messages}
@@ -164,8 +164,8 @@ function ChatPanel({
         <div ref={bottomRef} />
       </div>
 
-      <div className="p-3 border-t border-slate-800">
-        <div className="flex gap-2">
+      <div className="flex-shrink-0 p-3 border-t border-slate-800 bg-slate-900">
+        <div className="flex gap-2 items-center">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -177,7 +177,7 @@ function ChatPanel({
           <button
             onClick={() => void handleSend()}
             disabled={isLoading || !input.trim()}
-            className="px-3 py-2 bg-cyan-500 text-slate-950 rounded-lg hover:bg-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+            className="flex-shrink-0 w-9 h-9 flex items-center justify-center bg-cyan-500 text-slate-950 rounded-lg hover:bg-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-bold text-base"
           >
             {isLoading ? '…' : '↑'}
           </button>
