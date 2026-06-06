@@ -63,7 +63,7 @@ async def ingest():
                 await db.execute(
                     text(
                         "INSERT INTO chunks (content, source, embedding) "
-                        "VALUES (:c, :s, :e::vector)"
+                        "VALUES (:c, :s, CAST(:e AS vector))"
                     ),
                     {"c": chunk["content"], "s": chunk["source"], "e": vec_str},
                 )
